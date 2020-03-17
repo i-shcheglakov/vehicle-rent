@@ -3,7 +3,8 @@ import {
   Button,
   StyleSheet,
   Text,
-  View 
+  TouchableOpacity,
+  View
 } from 'react-native'
 
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer';
@@ -13,18 +14,73 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
+function MapScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Map Screen</Text>
+    </View>
+  );
+}
+
+function PaymentScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Payment Screen</Text>
+    </View>
+  );
+}
+
+function RideHistoryScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Ride History Screen</Text>
+    </View>
+  );
+}
+
+function HelpScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Help Screen</Text>
+    </View>
+
+  );
+}
+
+function SettingsScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Settings Screen</Text>
+    </View>
+
+  );
+}
+
 function CustomDrawerContent(props) {
   return (
     <View style={styles.drawerContainer}>
       <View style={styles.drawerHeader}>
-        <Text style={{color: 'white'}}>This is text</Text>
+        <View style={{margin: 30}}>
+          <Text style={{color: 'white', fontSize: 20}}>Hello, rider!</Text>
+        </View>
+        <View>
+        </View>
       </View>
       <View style={styles.drawerItems}>
-        <DrawerItemList {...props} />
-        <DrawerItem label='Help' onPress={()=> alert("Not implemented")}/>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Payment')}>
+          <Text style={styles.drawerItem}>Payment</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('RideHistory')}>
+          <Text style={styles.drawerItem}>Ride History</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Settings')}>
+          <Text style={styles.drawerItem}>Settings</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Help')}>
+          <Text style={styles.drawerItem}>Help</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.drawerFooter}>
-        <Text style={{textAlign: 'center'}}>Version 0.9</Text>
       </View>
     </View>
   );
@@ -32,31 +88,21 @@ function CustomDrawerContent(props) {
 
 function HomeScreen({navigation}) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title='Go to notifications'
-      />
-    </View>
-  );
-}
-
-function NotificationScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button
-        onPress={() => navigation.goBack()}
-        title='Go back home'/>
-    </View>
+    <Stack.Navigator initialRouteName='Map'>
+      <Stack.Screen name='Map' component={MapScreen}/>
+      <Stack.Screen name='Payment' component={PaymentScreen}/>
+      <Stack.Screen name='RideHistory' component={RideHistoryScreen}/>
+      <Stack.Screen name='Help' component={HelpScreen}/>
+      <Stack.Screen name='Settings' component={SettingsScreen}/>
+    </Stack.Navigator>
   );
 }
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home" drawerContent={(props) => CustomDrawerContent(props)}> 
+      <Drawer.Navigator drawerContent={(props) => CustomDrawerContent(props)}>
         <Drawer.Screen name="Home" component={HomeScreen}/>
-        <Drawer.Screen name="Notifications" component={NotificationScreen}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -68,15 +114,18 @@ const styles = StyleSheet.create({
   },
   drawerHeader: {
     backgroundColor: 'black',
-    flex: 1
+    height: 200,
   },
   drawerItems: {
-
+    paddingVertical: 20
   },
   drawerFooter: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'green'
+    backgroundColor: 'black'
+  },
+  drawerItem: {
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    fontSize: 18
   }
 });
