@@ -6,18 +6,45 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
-
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer';
+import {
+  Icon
+} from 'react-native-elements'
+import { 
+  createDrawerNavigator, 
+  DrawerContentScrollView, 
+  DrawerItemList,
+  DrawerItem
+} from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-function MapScreen() {
+function MapScreen({navigation}) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Map Screen</Text>
+    <View style={{flex: 1}}>
+      <View style={{height: 60}}>
+        <TouchableOpacity
+          style={{
+            borderColor: 'rgba(0,0,0,0.1)',
+            borderWidth: 1,
+            alignItems:'center',
+            justifyContent:'center',
+            width: 50,
+            height: 50,
+            backgroundColor:'#fff',
+            borderRadius:50,
+            margin: 15
+          }}
+          onPress={() => navigation.toggleDrawer()}
+        >
+          <Icon name={'menu'} size={30} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Map Screen</Text>
+      </View>
     </View>
   );
 }
@@ -89,7 +116,7 @@ function CustomDrawerContent(props) {
 function HomeScreen({navigation}) {
   return (
     <Stack.Navigator initialRouteName='Map'>
-      <Stack.Screen name='Map' component={MapScreen}/>
+      <Stack.Screen name='Map' component={MapScreen} options={{headerShown: false}}/>
       <Stack.Screen name='Payment' component={PaymentScreen}/>
       <Stack.Screen name='RideHistory' component={RideHistoryScreen}/>
       <Stack.Screen name='Help' component={HelpScreen}/>
