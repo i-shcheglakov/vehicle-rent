@@ -1,14 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { 
-  Button,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
-} from 'react-native'
+} from 'react-native';
 import {
+  Button,
   Icon
-} from 'react-native-elements'
+} from 'react-native-elements';
+
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
+
 import { 
   createDrawerNavigator, 
   DrawerContentScrollView, 
@@ -24,7 +27,7 @@ const Stack = createStackNavigator();
 function MapScreen({navigation}) {
   return (
     <View style={{flex: 1}}>
-      <View style={{height: 60}}>
+      <View>
         <TouchableOpacity
           style={{
             borderColor: 'rgba(0,0,0,0.1)',
@@ -39,11 +42,30 @@ function MapScreen({navigation}) {
           }}
           onPress={() => navigation.toggleDrawer()}
         >
-          <Icon name={'menu'} size={30} color="black" />
+          <Icon
+            name={'menu'}
+            size={30}
+            color='black'
+          />
         </TouchableOpacity>
       </View>
-      <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Map Screen</Text>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
+        <Button
+          onPress={() => navigation.navigate('QRCodeScanner')}
+          containerStyle={{margin: 20, width: 250}}
+          buttonStyle={{borderWidth: 0, borderRadius: 5}}
+          title='Scan QR code'
+          titleStyle={{paddingLeft: 20, color: 'black'}}
+          type='outline'
+          raised
+          icon={
+            <IconAwesome
+              name='qrcode'
+              size={30}
+              color='black'
+            />
+          }
+        />
       </View>
     </View>
   );
@@ -81,6 +103,14 @@ function SettingsScreen() {
     </View>
 
   );
+}
+
+function QRCodeScannerScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>QR Code Scanner Screen</Text>
+    </View>
+  )
 }
 
 function CustomDrawerContent(props) {
@@ -121,6 +151,7 @@ function HomeScreen({navigation}) {
       <Stack.Screen name='RideHistory' component={RideHistoryScreen}/>
       <Stack.Screen name='Help' component={HelpScreen}/>
       <Stack.Screen name='Settings' component={SettingsScreen}/>
+      <Stack.Screen name='QRCodeScanner' component={QRCodeScannerScreen}/>
     </Stack.Navigator>
   );
 }
