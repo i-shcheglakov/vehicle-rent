@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 function MapScreen({navigation}) {
   return (
     <View style={{flex: 1}}>
-      <View>
+      <View style={{alignItems: 'flex-start'}}>
         <TouchableOpacity
           style={{
             borderColor: 'rgba(0,0,0,0.1)',
