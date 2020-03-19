@@ -22,7 +22,8 @@ export default class GoogleMapView extends React.Component {
           longitude: 30.504575,
           latitudeDelta: 0.01,
           longitudeDelta: 0.0215
-        }}>
+        }}
+      >
         <Marker
           coordinate={{
             latitude: 50.439543,
@@ -41,6 +42,7 @@ export default class GoogleMapView extends React.Component {
 
 const styles = StyleSheet.create({
   map: {
-    height: '100%'
+    height: '100%',
+    width: '100%'
   }
-})
+});
