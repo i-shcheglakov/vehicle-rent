@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { 
+import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
-import {
-  Button,
-  Icon
-} from 'react-native-elements';
-
-import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
 import HelpScreen from './components/HelpScreen';
 import MapScreen from './components/MapScreen';
