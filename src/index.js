@@ -12,6 +12,13 @@ import {
 
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
+import HelpScreen from './components/HelpScreen';
+import MapScreen from './components/MapScreen';
+import PaymentScreen from './components/PaymentScreen';
+import QRCodeScannerScreen from './components/QRCodeScannerScreen';
+import RideHistoryScreen from './components/RideHistoryScreen';
+import SettingsScreen from './components/SettingsScreen';
+
 import { 
   createDrawerNavigator, 
   DrawerContentScrollView, 
@@ -23,95 +30,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-
-function MapScreen({navigation}) {
-  return (
-    <View style={{flex: 1}}>
-      <View style={{alignItems: 'flex-start'}}>
-        <TouchableOpacity
-          style={{
-            borderColor: 'rgba(0,0,0,0.1)',
-            borderWidth: 1,
-            alignItems:'center',
-            justifyContent:'center',
-            width: 50,
-            height: 50,
-            backgroundColor:'#fff',
-            borderRadius:50,
-            margin: 15
-          }}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <Icon
-            name={'menu'}
-            size={30}
-            color='black'
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
-        <Button
-          onPress={() => navigation.navigate('QRCodeScanner')}
-          containerStyle={{margin: 20, width: 250}}
-          buttonStyle={{borderWidth: 0, borderRadius: 5}}
-          title='Scan QR code'
-          titleStyle={{paddingLeft: 20, color: 'black'}}
-          type='outline'
-          raised
-          icon={
-            <IconAwesome
-              name='qrcode'
-              size={30}
-              color='black'
-            />
-          }
-        />
-      </View>
-    </View>
-  );
-}
-
-function PaymentScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Payment Screen</Text>
-    </View>
-  );
-}
-
-function RideHistoryScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Ride History Screen</Text>
-    </View>
-  );
-}
-
-function HelpScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Help Screen</Text>
-    </View>
-
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Settings Screen</Text>
-    </View>
-
-  );
-}
-
-function QRCodeScannerScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>QR Code Scanner Screen</Text>
-    </View>
-  )
-}
 
 function CustomDrawerContent(props) {
   return (
