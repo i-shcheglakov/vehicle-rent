@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "280811074813",
+    "firebase_url": "https://smart-radio-268609.firebaseio.com",
+    "project_id": "smart-radio-268609",
+    "storage_bucket": "smart-radio-268609.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280811074813:android:0945b72bee63cce1463a94",
+        "android_client_info": {
+          "package_name": "com.vehiclerent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280811074813-a7hpiilp6r4r181u6tlbq0lqfdr7icp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vehiclerent",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "280811074813-3icd0fkbp8tl1e53tgfepj3lvijiondb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIeUziA4fNChuwugsgKqYhbt-FuwJ3LhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280811074813-3icd0fkbp8tl1e53tgfepj3lvijiondb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
