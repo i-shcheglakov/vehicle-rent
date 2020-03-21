@@ -102,7 +102,7 @@ export default class LoginForm extends Component {
           Welcome {userInfo.user.name}
         </Text>
         <Text>Your user info: {JSON.stringify(userInfo.user)}</Text>
-        <Button onPress={() => this._signOut} title='Logout'/>
+        <Button onPress={this._signOut} title='Logout'/>
         {this.renderError()}
       </View>
     );
@@ -119,7 +119,7 @@ export default class LoginForm extends Component {
           style={{ width: 312, height: 48 }}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Light}
-          onPress={() => this._signIn()}
+          onPress={this._signIn}
         />
         {this.renderError()}
       </View>
@@ -140,6 +140,7 @@ export default class LoginForm extends Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      this.setState({userInfo, error: null});
     } catch (error) {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
@@ -160,7 +161,7 @@ export default class LoginForm extends Component {
     }
   };
 
-  _singOut = async () => {
+  _signOut = async () => {
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
@@ -182,7 +183,6 @@ export default class LoginForm extends Component {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#F5FCFF'
         }}
       >
         {this.renderIsSignedIn()}
@@ -237,7 +237,6 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   buttonContainer: {
-    backgroundColor: '#2980b9',
     paddingVertical: 10
   },
   buttonText: {

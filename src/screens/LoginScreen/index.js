@@ -14,7 +14,7 @@ export default class Login extends Component {
         <View style={styles.logoContainer}>
           <Image 
             style={styles.logo}
-            source={require('../images/logo.png')}
+            source={require('../../images/logo.png')}
           />
         </View>
         <View style={styles.formContainer}>
@@ -28,7 +28,7 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3498db'
+    backgroundColor: '#F5FCFF'
   },
   logoContainer: {
     alignItems: 'center',
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   formContainer: {
   },
   logo: {
-    width: 100,
-    height: 100
+    width: 150,
+    height: 150
   }
 });
