@@ -12,6 +12,7 @@ import PaymentScreen from './components/PaymentScreen';
 import QRCodeScannerScreen from './components/QRCodeScannerScreen';
 import RideHistoryScreen from './components/RideHistoryScreen';
 import SettingsScreen from './components/SettingsScreen';
+import LoginScreen from './screens/LoginScreen';
 
 import { 
   createDrawerNavigator, 
@@ -19,7 +20,7 @@ import {
   DrawerItemList,
   DrawerItem
 } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Drawer = createDrawerNavigator();
@@ -68,12 +69,27 @@ function HomeScreen({navigation}) {
   );
 }
 
+function HomeScreenDrawer() {
+  return (
+    <Drawer.Navigator drawerContent={(props) => CustomDrawerContent(props)}>
+      <Drawer.Screen name="Home" component={HomeScreen}/>
+    </Drawer.Navigator>
+  );
+}
+
+function Main() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name='Login' component={LoginScreen}/>
+      <Stack.Screen name='Home' component={HomeScreenDrawer}/>
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => CustomDrawerContent(props)}>
-        <Drawer.Screen name="Home" component={HomeScreen}/>
-      </Drawer.Navigator>
+      <Main/>
     </NavigationContainer>
   );
 }

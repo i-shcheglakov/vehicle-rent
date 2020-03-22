@@ -174,6 +174,12 @@ export default class LoginForm extends Component {
     }
   };
 
+  renderSkipButton = () => {
+    return (
+      <Button title='Skip' onPress={() => this.props.navigation.navigate('Home')}/>
+    )
+  }
+
   render() {
     const { userInfo } = this.state;
 
@@ -189,6 +195,7 @@ export default class LoginForm extends Component {
         {this.renderGetCurrentUser()}
         {this.renderGetTokens()}
         {body}
+        {this.renderSkipButton()}
       </View>
     );
   }
