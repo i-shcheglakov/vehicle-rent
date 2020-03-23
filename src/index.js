@@ -13,6 +13,12 @@ import QRCodeScannerScreen from './components/QRCodeScannerScreen';
 import RideHistoryScreen from './components/RideHistoryScreen';
 import SettingsScreen from './components/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
+import { isAuthenticated } from './Auth'
+import { 
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes
+} from '@react-native-community/google-signin';
 
 import { 
   createDrawerNavigator, 
@@ -77,14 +83,60 @@ function HomeScreenDrawer() {
   );
 }
 
-function Main() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name='Login' component={LoginScreen}/>
-      <Stack.Screen name='Home' component={HomeScreenDrawer}/>
-    </Stack.Navigator>
-  );
+class Main extends Component {
+
+  constructor(props) {
+    super(props);
+    this.onAuthSucessfull = this.onAuthSucessfull.bind(this);
+    this.state = {
+      authenticated: false,
+      user: null,
+      tokens: null
+    }
+  }
+
+  componentWillMount() {
+    console.log('Main componentWillMount')
+  }
+
+  componentWillUnmount() {
+    console.log('Main componentWillUnmount')
+  }
+
+  componentDidMount() {
+    console.log('Main componentDidMount');
+    // GoogleSignin.configure({
+    //   webClientId: '280811074813-3icd0fkbp8tl1e53tgfepj3lvijiondb.apps.googleusercontent.com',
+    //   offlineAccess: false
+    // });
+
+    // try {
+    //   let user = await GoogleSignin.signInSilently();
+    //   this.setState({...this.state, authenticated: true, user})
+    // } catch (e) {
+    //   console.log(e);
+    // }
+  }
+
+  onAuthSucessfull() {
+    this.setState({...this.state, authenticated: true})
+  }
+
+  render() {
+    return (
+      <Stack.Navigator headerMode="none">
+        {this.state.authenticated ? (
+          <Stack.Screen name='Home' component={HomeScreenDrawer}/>
+        ) : (
+          <Stack.Screen name='Login' component={LoginScreen} initialParams={{
+            onAuthSuccessfull: this.onAuthSucessfull
+          }}/>
+        )}
+      </Stack.Navigator>
+    );
+  }
 }
+
 
 export default function App() {
   return (

@@ -14,6 +14,7 @@ import {
   statusCodes
 } from '@react-native-community/google-signin';
 
+
 export default class LoginForm extends Component {
   constructor(props) {
     super(props);
@@ -23,9 +24,19 @@ export default class LoginForm extends Component {
     }
   }
 
+  componentWillUnmount() {
+    console.log("LoginFrom componentWillUnmount")
+  }
+
+
+  componentWillMount() {
+    console.log("LoginFrom componentWillMount")
+  }
+
   async componentDidMount() {
+    console.log("LoginForm componentDidMount")
     this._configureGoogleSignIn();
-    await this._getCurrentUser();
+    //await this._getCurrentUser();
   }
 
   _configureGoogleSignIn() {
@@ -141,6 +152,7 @@ export default class LoginForm extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.setState({userInfo, error: null});
+      this.props.route.params.onAuthSuccessfull()
     } catch (error) {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
