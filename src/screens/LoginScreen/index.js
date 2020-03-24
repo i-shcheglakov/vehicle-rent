@@ -3,24 +3,10 @@ import {
   StyleSheet,
   View,
   Image,
-  Text 
 } from 'react-native';
 import LoginForm from './LoginForm';
 
 export default class Login extends Component {
-  componentWillMount() {
-    console.log("Login componentWillMount")
-  }
-
-  componentDidMount() {
-    console.log("Login componentDidMount")
-  }
-
-  componentWillUnmount() {
-    console.log("Login componentWillUnmount")
-  }
-
-
   render() {
     return (
       <View style={styles.container}>

@@ -24,18 +24,8 @@ export default class LoginForm extends Component {
     }
   }
 
-  componentWillUnmount() {
-    console.log("LoginFrom componentWillUnmount")
-  }
-
-
-  componentWillMount() {
-    console.log("LoginFrom componentWillMount")
-  }
-
-  async componentDidMount() {
-    console.log("LoginForm componentDidMount")
-    this._configureGoogleSignIn();
+   async componentDidMount() {
+    //this._configureGoogleSignIn();
     //await this._getCurrentUser();
   }
 
@@ -120,6 +110,7 @@ export default class LoginForm extends Component {
   }
 
   renderSignInButton() {
+    console.log(this.props.route);
     return (
       <View 
         style={{
@@ -127,10 +118,10 @@ export default class LoginForm extends Component {
           alignItems: 'center'
         }}>
         <GoogleSigninButton
-          style={{ width: 312, height: 48 }}
+          style={{ width: 312, height: 48, margin: 20}}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Light}
-          onPress={this._signIn}
+          onPress={this.props.route.params.signIn}
         />
         {this.renderError()}
       </View>
@@ -152,7 +143,6 @@ export default class LoginForm extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.setState({userInfo, error: null});
-      this.props.route.params.onAuthSuccessfull()
     } catch (error) {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
@@ -201,13 +191,13 @@ export default class LoginForm extends Component {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-        }}
+        } }
       >
         {this.renderIsSignedIn()}
         {this.renderGetCurrentUser()}
         {this.renderGetTokens()}
         {body}
-        {this.renderSkipButton()}
+        {/* {this.renderSkipButton()} */}
       </View>
     );
   }

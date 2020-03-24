@@ -26,7 +26,7 @@ import SettingsScreen from './components/SettingsScreen';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-const Screens = ({ navigation }) => {
+const Screens = ({ navigation, route }) => {
   return (
     <Stack.Navigator 
       screenOptions={{
@@ -44,10 +44,11 @@ const Screens = ({ navigation }) => {
 }
 
 const DrawerContent = props => {
+  console.log(props.route.params);
   return (
     <View style={styles.container}>
       <View style={styles.heading}>
-        <Text style={styles.title}>Hello, rider!</Text>
+        <Text style={styles.title}>Hello, {props.route.params.userName}!</Text>
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItem 
@@ -70,16 +71,22 @@ const DrawerContent = props => {
           onPress={() => props.navigation.navigate('Help')}
           icon={() => <Feather name='help-circle' size={16}/>}
         />
+        <DrawerItem 
+          label='Logout'
+          onPress={() => {props.route.params.signOut()}}
+          icon={() => <Feather name='help-circle' size={16}/>}
+        />
+
       </DrawerContentScrollView>
     </View>
   );
 }
 
-export default () => {
+export default ({route}) => {
   return (
     <Drawer.Navigator
       initialRouteName='Map'
-      drawerContent={(props) => DrawerContent(props)}
+      drawerContent={(props) => DrawerContent({...props, route})}
     >
       <Drawer.Screen name='Screens' component={Screens}/>
     </Drawer.Navigator>
