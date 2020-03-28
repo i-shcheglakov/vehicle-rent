@@ -76,7 +76,6 @@ const DrawerContent = props => {
           onPress={() => {props.route.params.signOut()}}
           icon={() => <Feather name='help-circle' size={16}/>}
         />
-
       </DrawerContentScrollView>
     </View>
   );

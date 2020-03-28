@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { View, Button } from 'react-native';
+import {
+  Alert,
+  View,
+  Button
+} from 'react-native';
 import { 
   GoogleSignin,
   statusCodes
@@ -14,11 +18,9 @@ export default class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenticated: false,
+      userInfo: null,
       error: null
     }
-    this._signOut = this._signOut.bind(this);
-    this._signIn = this._signIn.bind(this);
   }
 
   componentDidMount() {
@@ -35,10 +37,9 @@ export default class Auth extends Component {
 
   _getCurrentUser = async () => {
     try {
-      const user = await GoogleSignin.signInSilently();
+      const userInfo = await GoogleSignin.signInSilently();
       this.setState({ 
-        authenticated: true,
-        user,
+        userInfo,
         error: null 
       });
     } catch (error) {
@@ -52,10 +53,9 @@ export default class Auth extends Component {
   _signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const user = await GoogleSignin.signIn();
+      const userInfo = await GoogleSignin.signIn();
       this.setState({
-        authenticated: true,
-        user,
+        userInfo,
         error: null
       });
     } catch (error) {
@@ -84,8 +84,7 @@ export default class Auth extends Component {
       await GoogleSignin.signOut();
 
       this.setState({
-        authenticated: false,
-        user: null,
+        userInfo: null,
         error: null
       });
     } catch (error) {
@@ -95,23 +94,20 @@ export default class Auth extends Component {
     }
   };
 
-
   render() {
-
-
     return (
       <AuthStack.Navigator 
         screenOptions={{
           headerShown: false,
         }}
       >
-        {this.state.authenticated ? (
+        {this.state.userInfo ? (
           <AuthStack.Screen 
             name='Drawer'
             component={Drawer}
             initialParams={{
-              signOut: this._signOut,
-              userName: this.state.user.user.givenName
+              signOut: this._signOut.bind(this),
+              userName: this.state.userInfo.user.givenName
             }}
           />
         ) : (
@@ -119,7 +115,7 @@ export default class Auth extends Component {
             name='LoginScreen'
             component={LoginScreen}
             initialParams={{
-              signIn: this._signIn
+              signIn: this._signIn.bind(this)
             }}
           />
         )}

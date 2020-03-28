@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { 
   StyleSheet,
   View,
-  TextInput,
-  TouchableOpacity,
   Text,
   Button,
   Alert 
@@ -11,7 +9,6 @@ import {
 import { 
   GoogleSignin,
   GoogleSigninButton,
-  statusCodes
 } from '@react-native-community/google-signin';
 
 
@@ -22,30 +19,6 @@ export default class LoginForm extends Component {
       userInfo: null,
       error: null
     }
-  }
-
-   async componentDidMount() {
-    //this._configureGoogleSignIn();
-    //await this._getCurrentUser();
-  }
-
-  _configureGoogleSignIn() {
-    GoogleSignin.configure({
-      webClientId: '280811074813-3icd0fkbp8tl1e53tgfepj3lvijiondb.apps.googleusercontent.com',
-      offlineAccess: false
-    })
-  }
-
-  async _getCurrentUser() {
-    try {
-      const userInfo = await GoogleSignin.signInSilently();
-      this.setState({ userInfo, error: null });
-    } catch (error) {
-      const errorMessage = error.code === statusCodes.SIGN_IN_REQUIRED ? 'Please, sign in' : error.message;
-      this.setState({
-        error: new Error(errorMessage)
-      });
-    }    
   }
 
   renderIsSignedIn() {
@@ -138,54 +111,9 @@ export default class LoginForm extends Component {
     return <Text>{text}</Text>;
   }
 
-  _signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      this.setState({userInfo, error: null});
-    } catch (error) {
-      switch (error.code) {
-        case statusCodes.SIGN_IN_CANCELLED:
-          Alert.alert('canceled');
-          break;
-        case statusCodes.IN_PROGRESS:
-          Alert.alert('in progress');
-          break;
-        case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-          Alert.alert('play services not available or outdated');
-          break;
-        default:
-          Alert.alert('Something went wrong', error.toString());
-          this.setState({
-            error,
-          })
-      }
-    }
-  };
-
-  _signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-
-      this.setState({ userInfo: null, error: null});
-    } catch (error) {
-      this.setState({
-        error,
-      })
-    }
-  };
-
-  renderSkipButton = () => {
-    return (
-      <Button title='Skip' onPress={() => this.props.navigation.navigate('Home')}/>
-    )
-  }
-
   render() {
     const { userInfo } = this.state;
 
-    const body = userInfo ? this.renderUserInfo(userInfo) : this.renderSignInButton();
     return (
       <View
         style={{
@@ -196,8 +124,7 @@ export default class LoginForm extends Component {
         {this.renderIsSignedIn()}
         {this.renderGetCurrentUser()}
         {this.renderGetTokens()}
-        {body}
-        {/* {this.renderSkipButton()} */}
+        {this.renderSignInButton()}
       </View>
     );
   }
