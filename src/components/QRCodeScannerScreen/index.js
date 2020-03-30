@@ -1,11 +1,19 @@
 import React from 'react';
 import {
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import { RNCamera } from'react-native-camera';
+import { color } from 'react-native-reanimated';
 
 export default class QRCodeScannerScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      barcodeData: null
+    }
+  }
   render() {
     return(
       <View style={styles.container}>
@@ -20,10 +28,13 @@ export default class QRCodeScannerScreen extends React.Component {
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel'
           }}
+          captureAudio={false}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
+            this.setState({barcodeData: barcodes[0].data})
           }}
-        />
+        >
+          <Text style={styles.text}>{this.state.barcodeData}</Text>
+        </RNCamera>
       </View>
     );
   }
@@ -37,7 +48,12 @@ const styles = StyleSheet.create({
   },
   preview: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white'
+  }
 })
