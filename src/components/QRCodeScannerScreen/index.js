@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  Button
 } from 'react-native';
 import { RNCamera } from'react-native-camera';
 
@@ -13,11 +14,27 @@ export default class QRCodeScannerScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      barcodeData: null
+      barcodeData: null,
+      flashLight: false,
     }
   }
 
-  renderOverlay = (barcodeData) => {
+  renderFlashLightButton = () => {
+    const { flashLight } = this.state;
+    return (
+      <Button
+        title={flashLight ?
+           'Light Off' :
+           'Light On'}
+        onPress={() =>
+          this.setState({flashLight: !flashLight})
+        }
+      />
+    );
+  }
+
+  renderOverlay = () => {
+    const { barcodeData } = this.state;
     return (
       <View style={{flex: 1}}>
         <View
@@ -44,13 +61,14 @@ export default class QRCodeScannerScreen extends React.Component {
           <Text style={styles.text}>
             {barcodeData}
           </Text>
+          {this.renderFlashLightButton()}
         </View>
       </View>
     );
   }
 
   render() {
-    const { barcodeData } = this.state;
+    const { flashLight } = this.state;
 
     return(
       <View style={styles.container}>
@@ -63,8 +81,12 @@ export default class QRCodeScannerScreen extends React.Component {
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             this.setState({barcodeData: barcodes[0].data})
           }}
+          flashMode={flashLight ?
+            RNCamera.Constants.FlashMode.torch :
+            RNCamera.Constants.FlashMode.off
+          }
         >
-          {this.renderOverlay(barcodeData)}
+          {this.renderOverlay()}
         </RNCamera>
       </View>
     );
