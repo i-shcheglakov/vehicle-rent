@@ -3,9 +3,11 @@ import {
   StyleSheet,
   Text,
   View,
+  Dimensions
 } from 'react-native';
 import { RNCamera } from'react-native-camera';
-import { color } from 'react-native-reanimated';
+
+const { width, height } = Dimensions.get('window');
 
 export default class QRCodeScannerScreen extends React.Component {
   constructor(props) {
@@ -14,26 +16,55 @@ export default class QRCodeScannerScreen extends React.Component {
       barcodeData: null
     }
   }
+
+  renderOverlay = (barcodeData) => {
+    return (
+      <View style={{flex: 1}}>
+        <View
+          style={[
+            styles.overlay,
+            styles.overlayTop
+          ]}
+        >
+          <Text style={styles.text}>
+            Find the code on top of the handle
+          </Text>
+        </View>
+        <View style={styles.overlayRow}>
+          <View style={styles.overlay}/>
+          <View style={styles.overlayCenter}/>
+          <View style={styles.overlay}/>
+        </View>
+        <View
+          style={[
+            styles.overlay,
+            styles.overlayBottom
+            ]}
+        >
+          <Text style={styles.text}>
+            {barcodeData}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   render() {
+    const { barcodeData } = this.state;
+
     return(
       <View style={styles.container}>
         <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
-          style={styles.preview}
-          anroidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel'
-          }}
+          style={styles.cameraView}
           captureAudio={false}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             this.setState({barcodeData: barcodes[0].data})
           }}
         >
-          <Text style={styles.text}>{this.state.barcodeData}</Text>
+          {this.renderOverlay(barcodeData)}
         </RNCamera>
       </View>
     );
@@ -42,18 +73,37 @@ export default class QRCodeScannerScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'center'
+    flex: 1
   },
-  preview: {
+  cameraView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   text: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 12,
     color: 'white'
+  },
+  overlayTop: {
+    flex: 1
+  },
+  overlayRow: {
+    flexDirection: 'row'
+  },
+  overlayBottom: {
+    flex: 1
+  },
+  overlay: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(1,1,1,0.6)',
+  },
+  overlayCenter: {
+    width: 240,
+    height: 240,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#0086b3',
   }
 })
